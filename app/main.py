@@ -8,6 +8,7 @@ from . import models
 
 
 from . import schema
+from . import utils
 
 
 # creating connection 
@@ -94,7 +95,26 @@ def product_up(id: int , product: schema.Product, db: Session = Depends(get_db))
      }
 
 
+# creating a user 
 
+@app.post('/user', status_code=status.HTTP_201_CREATED)
+def create_user(user: schema.User, db: Session = Depends(get_db)): 
+     
+    #  # hashing password 
+    #  hashed_password = utils.hash_password(user.password)
+    #  user.password = hashed_password
+
+     new_user = models.User(
+          **user.dict()
+     )
+
+     db.add(new_user)
+     db.commit()
+     db.refresh(new_user)
+
+     return {
+          "new user": new_user
+     }
           
     
 

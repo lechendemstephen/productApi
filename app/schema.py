@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 
@@ -10,3 +10,9 @@ class productOut(Product):
   
     class Config: 
         orm_mode = True
+
+class User(BaseModel): 
+    name: str
+    email: EmailStr
+    password: str
+    
